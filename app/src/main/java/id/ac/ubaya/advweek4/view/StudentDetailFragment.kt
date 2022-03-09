@@ -7,11 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
-import androidx.recyclerview.widget.LinearLayoutManager
 import id.ac.ubaya.advweek4.R
+import id.ac.ubaya.advweek4.model.Student
 import id.ac.ubaya.advweek4.viewmodel.DetailViewModel
-import id.ac.ubaya.advweek4.viewmodel.ListViewModel
+import kotlinx.android.synthetic.main.fragment_student_detail.*
 import kotlinx.android.synthetic.main.fragment_student_list.*
 import kotlinx.android.synthetic.main.student_list_item.view.*
 
@@ -22,6 +21,7 @@ import kotlinx.android.synthetic.main.student_list_item.view.*
  */
 class StudentDetailFragment : Fragment() {
     private lateinit var viewModel: DetailViewModel
+    val studentList = arrayListOf<Student>()
 
 
     override fun onCreateView(
@@ -39,7 +39,19 @@ class StudentDetailFragment : Fragment() {
         observeViewModel()
     }
 
+    fun update(studentDetail: Student){
+        val student = studentDetail
+        editID.setText(student.id)
+        editName.setText(student.name)
+        editPhone.setText(student.phone)
+        editBirth.setText(student.dob)
+    }
+
     private fun observeViewModel() {
+        viewModel.studentLiveData.observe(viewLifecycleOwner, Observer {
+            update(it)
+        })
+
     }
 
 }

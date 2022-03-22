@@ -1,6 +1,7 @@
 package id.ac.ubaya.advweek4.view
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import id.ac.ubaya.advweek4.R
 import id.ac.ubaya.advweek4.model.Student
+import id.ac.ubaya.advweek4.util.loadImage
 import id.ac.ubaya.advweek4.viewmodel.DetailViewModel
 import kotlinx.android.synthetic.main.fragment_student_detail.*
 import kotlinx.android.synthetic.main.fragment_student_list.*
@@ -34,23 +36,31 @@ class StudentDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
-        viewModel.fetch()
+        val student_id = StudentDetailFragmentArgs.fromBundle(requireArguments()).idStudent
+
+        viewModel.fetch(student_id)
 
         observeViewModel()
     }
 
     fun update(studentDetail: Student){
         val student = studentDetail
+        Log.d("ajax", student.toString())
         editID.setText(student.id)
         editName.setText(student.name)
         editPhone.setText(student.phone)
         editBirth.setText(student.dob)
+        imageStudent.loadImage(student.photoURL, progressDetailPhoto)
     }
 
     private fun observeViewModel() {
         viewModel.studentLiveData.observe(viewLifecycleOwner, Observer {
             update(it)
         })
+
+//        viewModel.studentsLiveData.observe(viewLifecycleOwner, Observer {
+//            update(it)
+//        })
 
     }
 

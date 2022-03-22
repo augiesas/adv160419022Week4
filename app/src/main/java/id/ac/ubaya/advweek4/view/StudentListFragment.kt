@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import id.ac.ubaya.advweek4.R
 import id.ac.ubaya.advweek4.viewmodel.ListViewModel
 import kotlinx.android.synthetic.main.fragment_student_list.*
+import kotlinx.android.synthetic.main.student_list_item.*
 
 /**
  * A simple [Fragment] subclass.
@@ -38,6 +39,15 @@ class StudentListFragment : Fragment() {
         recView.adapter = studentListAdapter
 
         observeViewModel()
+
+        refreshLayout.setOnRefreshListener {
+            recView.visibility = View.GONE
+            textError.visibility = View.GONE
+            progressLoad.visibility = View.VISIBLE
+            viewModel.refresh()
+            refreshLayout.isRefreshing = false
+        }
+
     }
 
     private fun observeViewModel() {

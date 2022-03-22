@@ -12,11 +12,15 @@
         tools:layout="@layout/fragment_student_list" >
         <action
             android:id="@+id/actionStudentDetail"
-            app:destination="@id/studentDetailFragment" />
+            app:destination="@id/studentDetailFrag" />
     </fragment>
     <fragment
-        android:id="@+id/studentDetailFragment"
+        android:id="@+id/studentDetailFrag"
         android:name="id.ac.ubaya.advweek4.view.StudentDetailFragment"
         android:label="fragment_student_detail"
-        tools:layout="@layout/fragment_student_detail" />
+        tools:layout="@layout/fragment_student_detail" >
+        <argument
+            android:name="id_student"
+            app:argType="string" />
+    </fragment>
 </navigation>
